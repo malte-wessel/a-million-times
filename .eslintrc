@@ -8,6 +8,14 @@
         }
     },
     "rules": {
-        "semi": 2
+        "semi": 2,
+        "no-console": 0
+    },
+    "globals": {
+        requestAnimationFrame: true,
+        document: true,
+        Float32Array: true,
+        console: true,
+        window: true
     }
 }

@@ -1,38 +1,31 @@
-// Spring stiffness, in kg / s^2
-const k = -0.5;
-// Damping constant, in kg / s
-const b = -150;
-const mass = 1;
-
+import distance from '../util/distance';
 export default formation => {
-    let acc = null;
+    let vacc = null;
     return (x, y, index, value1, value2, v1, v2, t) => {
         if (x === 0 && y === 0) {
-            if (acc !== null && acc < 0.05) return;
-            else acc = 0;
+            if (vacc === 0 && t > 2000) return;
+            else vacc = 0;
         }
 
         const to1 = formation[index];
         const to2 = formation[index + 1];
 
-        const distance1 = value1 - to1;
-        const spring1 = k * distance1;
-        const damper1 = b * v1;
-        const a1 = (spring1 + damper1) / mass;
-        v1 += a1 / 10000;
+        const d1 = distance(value1, to1);
+        const d2 = distance(value2, to2);
 
-        const distance2 = value2 - to2;
-        const spring2 = k * distance2;
-        const damper2 = b * v2;
-        const a2 = (spring2 + damper2) / mass;
-        v2 += a2 / 10000;
+        if (d1 > 0.001) {
+            v1 = d1 / 100 * (t/2000);
+        } else {
+            v1 = 0;
+        }
 
-        acc +=
-            Math.abs(distance1) +
-            Math.abs(distance2) +
-            Math.abs(v1) +
-            Math.abs(v2);
+        if (d2 > 0.001) {
+            v2 = d2 / 100 * (t/2000);
+        } else {
+            v2 = 0;
+        }
 
+        vacc += v1 + v2;
         return [v1, v2];
     };
 };
