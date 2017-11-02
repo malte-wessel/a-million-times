@@ -40,13 +40,28 @@ const createApp = (root, options = {}) => {
     window.getValues = () => values.toString();
     window.getVelocities = () => velocities.toString();
 
-    let runner = runners.shift();
-    let startedAt = Date.now();
+    let runnerIndex = 0;
+    let update;
     let t;
+    let startedAt;
+
+    const next = () => {
+        if (runnerIndex === runners.length) runnerIndex = 0;
+        console.log(`Initialized runner with idx ${runnerIndex}`);
+        const init = runners[runnerIndex++];
+        update = init();
+        startedAt = Date.now();
+        t = 0;
+    };
+
+    next();
 
     const loop = () => {
         let index = 0;
+        let noResultsCount = 0;
+
         t = Date.now() - startedAt;
+
         for (let y = 0; y < rows; y++) {
             for (let x = 0; x < columns; x++) {
 
@@ -56,19 +71,12 @@ const createApp = (root, options = {}) => {
                 let v1 = velocities[index] || 0;
                 let v2 = velocities[index + 1] || 0;
 
-                let result = runner(x, y, index, value1, value2, v1, v2, t);
-                if (!result) {
-                    runner = runners.shift();
-                    if (!runner) {
-                        console.log('The end.');
-                        return;
-                    }
-                    startedAt = Date.now();
-                    t = 0;
-                    result = runner(x, y, index, value1, value2, v1, v2, t);
+                const result = update(x, y, index, value1, value2, v1, v2, t);
+                if (result) {
+                    [v1, v2] = result;
+                } else {
+                    noResultsCount++;
                 }
-
-                [v1, v2] = result;
 
                 const value1Next = value1 + v1;
                 const value2Next = value2 + v2;
@@ -81,6 +89,10 @@ const createApp = (root, options = {}) => {
 
                 index += 2;
             }
+        }
+
+        if (noResultsCount === rows * columns) {
+            next();
         }
 
         render(values, velocities);
