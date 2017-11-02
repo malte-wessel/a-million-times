@@ -1,7 +1,13 @@
 import { h } from '../util/dom';
 
-const createBoard = (n, m, options = {}) => {
-    const { clockSize = 50, pointerSize = 4 } = options;
+const createDebugger = (n, m, options = {}) => {
+    const {
+        clockSize,
+        pointerSize,
+        debugColor,
+        debugColor2,
+        debugColorText
+    } = options;
 
     const width = n * clockSize + (n - 1) * pointerSize;
     const height = m * clockSize + (m - 1) * pointerSize;
@@ -9,20 +15,20 @@ const createBoard = (n, m, options = {}) => {
     const elements = new Array(n * m * 2);
 
     let index = 0;
-    for (let x = 0; x < n; x++) {
-        for (let y = 0; y < m; y++) {
+    for (let y = 0; y < m; y++) {
+        for (let x = 0; x < n; x++) {
             const x1 = x * (clockSize + pointerSize);
             const y1 = y * (clockSize + pointerSize) + clockSize - 10;
             const value1El = h('div', {
                 style: {
                     padding: '2px 2px',
                     boxSizing: 'border-box',
-                    background: '#000',
+                    background: debugColor,
                     fontSize: '8px',
                     lineHeight: '8px',
                     fontWeight: 'bold',
                     fontFamily: 'sans-serif',
-                    color: '#fff',
+                    color: debugColorText,
                     overflow: 'hidden',
                     position: 'absolute',
                     left: `${x1}px`,
@@ -35,12 +41,12 @@ const createBoard = (n, m, options = {}) => {
                 style: {
                     padding: '2px 2px',
                     boxSizing: 'border-box',
-                    background: '#0289bd',
+                    background: debugColor2,
                     fontSize: '8px',
                     lineHeight: '8px',
                     fontWeight: 'bold',
                     fontFamily: 'sans-serif',
-                    color: '#fff',
+                    color: debugColorText,
                     overflow: 'hidden',
                     position: 'absolute',
                     left: `${x1}px`,
@@ -71,8 +77,8 @@ const createBoard = (n, m, options = {}) => {
 
     const render = values => {
         let index = 0;
-        for (let x = 0; x < n; x++) {
-            for (let y = 0; y < m; y++) {
+        for (let y = 0; y < m; y++) {
+            for (let x = 0; x < n; x++) {
                 const value1El = elements[index];
                 const value2El = elements[index + 1];
                 const value1 = values[index++];
@@ -89,4 +95,4 @@ const createBoard = (n, m, options = {}) => {
     };
 };
 
-export default createBoard;
+export default createDebugger;

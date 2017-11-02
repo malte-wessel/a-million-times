@@ -2,14 +2,14 @@ import defaultCreateRenderer from './renderer/createRenderer';
 
 const createApp = (root, options = {}) => {
     const {
-        columns,
-        rows,
-        runners,
+        columns = 10,
+        rows = 10,
+        runners = [],
         clockSize = 50,
         pointerSize = 4,
-        velocities,
-        values,
-        debug,
+        velocities = [],
+        values = [],
+        debug = false,
         debugTarget = 'values',
         backgroundColor = '#f7f7f7',
         clockColorStopTop = '#eee',
@@ -37,6 +37,9 @@ const createApp = (root, options = {}) => {
         debugColorText
     });
 
+    window.getValues = () => values.toString();
+    window.getVelocities = () => velocities.toString();
+
     let runner = runners.shift();
     let startedAt = Date.now();
     let t;
@@ -44,15 +47,14 @@ const createApp = (root, options = {}) => {
     const loop = () => {
         let index = 0;
         t = Date.now() - startedAt;
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < columns; x++) {
 
-        for (let x = 0; x < columns; x++) {
-            for (let y = 0; y < rows; y++) {
+                const value1 = values[index] || 0;
+                const value2 = values[index + 1] || 0;
 
-                const value1 = values[index];
-                const value2 = values[index + 1];
-
-                let v1 = velocities[index];
-                let v2 = velocities[index + 1];
+                let v1 = velocities[index] || 0;
+                let v2 = velocities[index + 1] || 0;
 
                 let result = runner(x, y, index, value1, value2, v1, v2, t);
                 if (!result) {

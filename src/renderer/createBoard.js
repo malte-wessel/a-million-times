@@ -15,8 +15,9 @@ const renderBackground = (ctx, options = {}) => {
     } = options;
 
     const radius = clockSize / 2;
-    for (let x = 0; x < columns; x++) {
-        for (let y = 0; y < rows; y++) {
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
+
             const cx = radius + x * (clockSize + pointerSize);
             const cy = radius + y * (clockSize + pointerSize);
 
@@ -70,8 +71,8 @@ const renderForeground = (ctx, values, options = {}) => {
 
     let valuesIndex = 0;
     const radius = clockSize / 2;
-    for (let x = 0; x < columns; x++) {
-        for (let y = 0; y < rows; y++) {
+    for (let y = 0; y < rows; y++) {
+        for (let x = 0; x < columns; x++) {
             const x1 = x * (clockSize + pointerSize) + radius;
             const y1 = y * (clockSize + pointerSize) + radius;
 
