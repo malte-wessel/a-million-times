@@ -11,8 +11,8 @@ import createStopAtFormation from './runners/createStopAtFormation';
 import createMoveToFormation from './runners/createMoveToFormation';
 import createDelay from './runners/createDelay';
 
-const columns = 20;
-const rows = 6;
+const columns = 24;
+const rows = 12;
 const debug = false;
 const debugTarget = 'values';
 
@@ -27,7 +27,7 @@ const runners = [
     ),
     createVelocityWave2(columns, rows),
     createStopAtFormation(
-        createTime(columns, rows)
+        () => createTime(columns, rows)
     ),
     createDelay(2000),
     createMoveToFormation(

@@ -8,20 +8,12 @@ const FACTOR = 0.5;
 const deccelerate = (value, to, v) => {
     if (value === to) return 0;
     let d = normalize(value < to ? to - value : value - to);
-
-    if (value < to && v < 0 || value > to && v > 0) {
-        d = 1 - d;
-    }
-
-    if (d < STOP_AFTER) {
-        return to - value;
-    }
-
+    if (value < to && v < 0 || value > to && v > 0) d = 1 - d;
+    if (d < STOP_AFTER) return to - value;
     if (d < DECCELERATE_AFTER) {
         const c = v / (d / v) * FACTOR;
         return v > 0 ? v - c : v + c;
     }
-
     return v;
 };
 

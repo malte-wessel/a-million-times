@@ -39,6 +39,8 @@ const createApp = (root, options = {}) => {
 
     window.getValues = () => values.toString();
     window.getVelocities = () => velocities.toString();
+    window.getState = () => `const values = [${values.toString()}];\nconst velocities = [${velocities.toString()}]`;
+
 
     let runnerIndex = 0;
     let update;
@@ -77,6 +79,9 @@ const createApp = (root, options = {}) => {
                 } else {
                     noResultsCount++;
                 }
+
+                v1 = v1 || 0;
+                v2 = v2 || 0;
 
                 const value1Next = value1 + v1;
                 const value2Next = value2 + v2;
