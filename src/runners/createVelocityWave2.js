@@ -1,8 +1,5 @@
-const euclideanDistance = (x1, y1, x2, y2) => {
-    if (!x2) x2 = 0;
-    if (!y2) y2 = 0;
-    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-};
+const euclideanDistance = (x1 = 0, y1 = 0, x2 = 0, y2 = 0) =>
+    Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 
 export default function createVelocityWave2(columns, rows) {
     const cx = Math.floor(columns / 2);
@@ -13,11 +10,16 @@ export default function createVelocityWave2(columns, rows) {
             const vto1 = 0.002;
             const vto2 = -0.002;
 
+            const a1 = 0.00002;
+            const a2 = -0.00002;
+
             const d = euclideanDistance(x, y, cx, cy);
 
             if (t > d * 1000) {
-                v1 = vto1;
-                v2 = vto2;
+                if (v1 < vto1) v1 += a1;
+                else v1 = vto1;
+                if (v2 > vto2) v2 += a2;
+                else v2 = vto2;
             }
 
             if (t > maxD * 1000 * 1.5) {
