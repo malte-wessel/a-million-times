@@ -20,18 +20,12 @@ const deccelerate = (value, to, v) => {
 export default function createStopAtFormation(createFormation) {
     return function init() {
         const formation = result(createFormation);
-        return function update(x, y, index, value1, value2, v1, v2) {
-            if (v1 === 0 && v2 === 0) {
+        return function update(x, y, index, hand, value, velocity) {
+            if (velocity === 0) {
                 return false;
             }
-
-            const to1 = formation[index];
-            const to2 = formation[index + 1];
-
-            v1 = deccelerate(value1, to1, v1);
-            v2 = deccelerate(value2, to2, v2);
-
-            return [v1, v2];
+            const to = formation[index];
+            return deccelerate(value, to, velocity);
         };
     };
 }

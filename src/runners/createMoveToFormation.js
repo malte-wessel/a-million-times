@@ -14,18 +14,12 @@ const moveTo = (value, to, t) => {
 export default function createMoveToFormation(createFormation) {
     return function init() {
         const formation = result(createFormation);
-        return function update(x, y, index, value1, value2, v1, v2, t) {
-            if (v1 === 0 && v2 === 0 && t > 2000) {
+        return function update(x, y, index, hand, value, velocity, t) {
+            if (velocity === 0 && t > 2000) {
                 return false;
             }
-
-            const to1 = formation[index];
-            const to2 = formation[index + 1];
-
-            v1 = moveTo(value1, to1, t);
-            v2 = moveTo(value2, to2, t);
-
-            return [v1, v2];
+            const to = formation[index];
+            return moveTo(value, to, t);
         };
     };
 }

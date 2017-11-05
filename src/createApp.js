@@ -1,4 +1,5 @@
 import defaultCreateRenderer from './renderer/createRenderer';
+import isNil from './util/isNil';
 
 const createApp = (root, options = {}) => {
     const {
@@ -46,6 +47,7 @@ const createApp = (root, options = {}) => {
     let update;
     let t;
     let startedAt;
+    const valuesCount = rows * columns * 2;
 
     const next = () => {
         if (runnerIndex === runners.length) runnerIndex = 0;
@@ -66,37 +68,34 @@ const createApp = (root, options = {}) => {
 
         for (let y = 0; y < rows; y++) {
             for (let x = 0; x < columns; x++) {
-
                 const value1 = values[index] || 0;
                 const value2 = values[index + 1] || 0;
-
                 let v1 = velocities[index] || 0;
                 let v2 = velocities[index + 1] || 0;
 
-                const result = update(x, y, index, value1, value2, v1, v2, t);
-                if (result) {
-                    [v1, v2] = result;
-                } else {
+                const result1 = update(x, y, index, 0, value1, v1, t);
+                if (isNil(result1)) {
                     noResultsCount++;
+                } else {
+                    v1 = result1;
                 }
 
-                v1 = v1 || 0;
-                v2 = v2 || 0;
+                const result2 = update(x, y, index + 1, 1, value2, v2, t);
+                if (isNil(result2)) {
+                    noResultsCount++;
+                } else {
+                    v2 = result2;
+                }
 
-                const value1Next = value1 + v1;
-                const value2Next = value2 + v2;
-
-                values[index] = value1Next;
-                values[index + 1] = value2Next;
-
+                values[index] = value1 + v1;
+                values[index + 1] = value2 + v2;
                 velocities[index] = v1;
                 velocities[index + 1] = v2;
-
                 index += 2;
             }
         }
 
-        if (noResultsCount === rows * columns) {
+        if (noResultsCount >= valuesCount) {
             next();
         }
 
