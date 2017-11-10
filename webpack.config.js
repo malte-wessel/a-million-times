@@ -10,7 +10,7 @@ const isProduction = () => process.env.NODE_ENV === 'production';
 const plugins = [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-        title: 'A million times clock'
+        template: './index.html'
     }),
     new EnvironmentPlugin({
         NODE_ENV: 'development'

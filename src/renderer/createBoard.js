@@ -118,12 +118,10 @@ const createBoard = (columns, rows, options = {}) => {
     const foregroundCtx = foreground.getContext('2d');
 
     const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
+        position: 'relative',
         width: `${width}px`,
         height: `${height}px`,
-        transform: `translate(-50%, -50%)`
+        margin: '0 auto'
     };
 
     const el = h('div', { style }, background, foreground);

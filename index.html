@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>A million times clock</title>
+        <style media="screen">
+            html {
+                height: 100%;
+            }
+            body {
+                background-color: #f7f7f7;
+                min-height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                font-family: monospace;
+            }
+            .header {
+                text-align: center;
+                padding: 20px;
+            }
+            .footer {
+                text-align: center;
+                padding: 20px;
+            }
+            .clock {
+                flex-grow: 1;
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>A million times clock implemented in JavaScript</h1>
+            <p>
+                <a href="https://www.youtube.com/watch?v=L88DlFh8aWM" target="_blank">Watch the original</a> &middot;
+                <a href="https://github.com/malte-wessel/a-million-times" target="_blank">View source on github</a>
+            </p>
+        </div>
+        <div class="clock"></div>
+        <div class="footer">
+            Made by <a href="https://twitter.com/drbreak" target="_blank">Malte Wessel</a>
+        </div>
+    </body>
+</html>

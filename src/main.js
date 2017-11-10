@@ -40,7 +40,9 @@ const runners = [
     ),
 ];
 
-createApp(document.body, {
+const root = document.querySelector('.clock');
+
+createApp(root, {
     columns,
     rows,
     velocities,
