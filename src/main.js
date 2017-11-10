@@ -9,6 +9,7 @@ import createVelocityWave from './runners/createVelocityWave';
 import createVelocityWave2 from './runners/createVelocityWave2';
 import createStopAtFormation from './runners/createStopAtFormation';
 import createMoveToFormation from './runners/createMoveToFormation';
+import createSimplexNoise from './runners/createSimplexNoise';
 import createDelay from './runners/createDelay';
 
 const columns = 24;
@@ -21,22 +22,21 @@ const values = createTime(columns, rows);
 
 const runners = [
     createDelay(2000),
-    createVelocityWave(columns, rows),
+    createSimplexNoise(columns, rows),
     createStopAtFormation(
-        createMagnet(columns, rows, true)
+        createMagnet(columns, rows)
     ),
     createVelocityWave2(columns, rows),
     createStopAtFormation(
-        () => createTime(columns, rows)
+        createTime(columns, rows)
     ),
     createDelay(2000),
     createMoveToFormation(
         createLines(columns, rows, 1/8)
     ),
-    createVelocityWave(columns, rows),
     createDelay(2000),
-    createStopAtFormation(
-        createTime(columns, rows)
+    createMoveToFormation(
+        createLines(columns, rows, -1/8)
     ),
 ];
 

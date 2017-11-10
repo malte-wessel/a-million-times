@@ -1,6 +1,25 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const { EnvironmentPlugin } = webpack;
+const isProduction = () => process.env.NODE_ENV === 'production';
+
+
+const plugins = [
+    new CleanWebpackPlugin(['dist']),
+    new HtmlWebpackPlugin({
+        title: 'A million times clock'
+    }),
+    new EnvironmentPlugin({
+        NODE_ENV: 'development'
+    })
+];
+
+if (isProduction()) {
+    plugins.push(new UglifyJSPlugin());
+}
 
 module.exports = {
     entry: './src/main.js',
@@ -8,12 +27,7 @@ module.exports = {
     devServer: {
         contentBase: './dist'
     },
-    plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-            title: 'Development'
-        })
-    ],
+    plugins: plugins,
     module: {
         rules: [{
             test: /\.js$/,

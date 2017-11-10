@@ -16,6 +16,10 @@
         document: true,
         Float32Array: true,
         console: true,
-        window: true
+        window: true,
+        require: true,
+        module: true,
+        process: true,
+        __dirname: true
     }
 }
