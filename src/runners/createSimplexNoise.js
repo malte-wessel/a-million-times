@@ -4,10 +4,10 @@ const ACCELERATION = 0.00002;
 const FINAL_VELOCITY = 0.002;
 
 export default function createVelocityWave2(columns, rows) {
-    const noise = createNoise(columns, rows, 0.2);
+    const noise = createNoise(columns, rows, 0.15);
     return function init() {
         return function update(x, y, index, hand, value, velocity, t) {
-            if (t > 5000) {
+            if (t > 10000) {
                 if (Math.abs(velocity) === FINAL_VELOCITY) return false;
                 if (Math.abs(velocity) < FINAL_VELOCITY) {
                     return velocity > 0
