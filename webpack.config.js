@@ -8,7 +8,7 @@ const isProduction = () => process.env.NODE_ENV === 'production';
 
 
 const plugins = [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['docs']),
     new HtmlWebpackPlugin({
         template: './index.html'
     }),
@@ -25,7 +25,7 @@ module.exports = {
     entry: './src/main.js',
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: './dist'
+        contentBase: './docs'
     },
     plugins: plugins,
     module: {
@@ -42,6 +42,6 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'docs')
     }
 };
