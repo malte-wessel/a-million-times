@@ -4,7 +4,7 @@ const ACCELERATION = 0.00002;
 const FINAL_VELOCITY = 0.002;
 
 export default function createVelocityWave2(columns, rows) {
-    const noise = createNoise(columns, rows, 0.15);
+    const noise = createNoise(columns, rows, 0.12);
     return function init() {
         return function update(x, y, index, hand, value, velocity, t) {
             if (t > 10000) {

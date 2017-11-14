@@ -5,7 +5,6 @@ import createMagnet from './formations/createMagnet';
 import createLines from './formations/createLines';
 import createTime from './formations/createTime';
 
-import createVelocityWave from './runners/createVelocityWave';
 import createVelocityWave2 from './runners/createVelocityWave2';
 import createStopAtFormation from './runners/createStopAtFormation';
 import createMoveToFormation from './runners/createMoveToFormation';
@@ -28,7 +27,7 @@ const runners = [
     ),
     createVelocityWave2(columns, rows),
     createStopAtFormation(
-        createTime(columns, rows)
+        () => createTime(columns, rows)
     ),
     createDelay(2000),
     createMoveToFormation(
